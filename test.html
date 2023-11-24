@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status Check</title>
+</head>
+<body>
+    <div id="status"></div>
+
+    <script>
+        const ipAddress = '66.59.208.176:25565';
+        const apiUrl = `https://api.mcsrvstat.us/simple/${ipAddress}`;
+        const statusElement = document.getElementById('status');
+
+        fetch(apiUrl)
+            .then(response => {
+                if (response.status === 200) {
+                    statusElement.textContent = `The server at ${ipAddress} is Online.`;
+                } else if (response.status === 404) {
+                    statusElement.textContent = `The server at ${ipAddress} is Offline.`;
+                } else {
+                    statusElement.textContent = `Unexpected response status: ${response.status}`;
+                }
+            })
+            .catch(error => {
+                statusElement.textContent = `Error fetching server status: ${error}`;
+            });
+    </script>
+</body>
+</html>
